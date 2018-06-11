@@ -23,7 +23,7 @@
 --
 
 local minetest_log_level = minetest.settings:get("debug_log_level")
-local mod_load_message = "[Mod] Mobs Ghost Redo [v0.2.0] loaded."
+local mod_load_message = "[Mod] Mobs Ghost Redo [v0.3.0] loaded."
 
 
 --
@@ -52,20 +52,19 @@ end
 mobs:register_mob("mobs_ghost_redo:ghost", {
 	nametag = "",
 	type = "monster",
-	hp_min = 6,
-	hp_max = 12,
+	hp_min = 20,
+	hp_max = 30,
 	armor = 100,
-	walk_velocity = 1.6,
-	run_velocity = 2,
-	walk_chance = 50,
+	walk_velocity = 1,
+	run_velocity = 4,
+	walk_chance = 25,
 	fly = true,
-	fly_in = "air",
 	view_range = 15,
-	reach = 2,
-	damage = 2,
+	reach = 4,
+	damage = 4,
 	water_damage = false,
 	lava_damage = false,
-	light_damage = 1.17,
+	light_damage = 9999,
 	suffocation = false,
 	docile_by_day = false,
 	attack_animals = true,
@@ -121,10 +120,12 @@ mobs:register_mob("mobs_ghost_redo:ghost", {
 	on_spawn = function(self, pos)
 		self.mesh = random_mesh()
 		self.object:set_properties({
-			mesh = self.mesh
+			mesh = self.mesh,
+			physical = false,
+			collide_with_objects = false
 		})
 		return true
-	end,
+	end
 })
 
 
@@ -141,8 +142,7 @@ mobs:spawn({name = "mobs_ghost_redo:ghost",
 	chance = 7,
 	active_object_count = 1,
 	min_height = -30912,
-	max_height = 31000,
-	day_toggle = false
+	max_height = 31000
 })
 
 

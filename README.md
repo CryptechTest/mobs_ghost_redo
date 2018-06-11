@@ -4,7 +4,7 @@
 
 **NOTE:** This is Blockmen's CME Ghost mob ported to Mobs Redo, and tweaked.
 
-**Version:** 0.2.0<br>
+**Version:** 0.3.0<br>
 **Source code's license:** GPL v3.0<br>
 **Media (Textures, Models, Sounds) license:** CC-BY-SA 4.0 International.
 
