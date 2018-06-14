@@ -24,10 +24,10 @@
 
 local ghost_daytime_check = minetest.settings:get_bool("ghost_daytime_check")
 local minetest_log_level = minetest.settings:get("debug_log_level")
-local mod_load_message = "[Mod] Mobs Ghost Redo [v0.4.0] loaded."
+local mod_load_message = "[Mod] Mobs Ghost Redo [v0.4.1] loaded."
 
 if (ghost_daytime_check == nil) then
-	landscape_abm = false
+	ghost_daytime_check = false
 end
 
 
