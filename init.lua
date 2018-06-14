@@ -22,13 +22,33 @@
 -- General variables
 --
 
+local ghost_daytime_check = minetest.settings:get_bool("ghost_daytime_check")
 local minetest_log_level = minetest.settings:get("debug_log_level")
-local mod_load_message = "[Mod] Mobs Ghost Redo [v0.3.0] loaded."
+local mod_load_message = "[Mod] Mobs Ghost Redo [v0.4.0] loaded."
+
+if (ghost_daytime_check == nil) then
+	landscape_abm = false
+end
 
 
 --
--- Random mesh function
+-- Functions
 --
+
+local function day_or_night()
+	local daytime = false
+	local time = minetest.get_timeofday() * 24000
+
+	if (time >= 4700) and (time <= 19250) then
+		daytime = true
+
+	else
+		daytime = false
+
+	end
+
+	return daytime
+end
 
 local function random_mesh()
 	local mesh = ""
@@ -50,7 +70,6 @@ end
 --
 
 mobs:register_mob("mobs_ghost_redo:ghost", {
-	nametag = "",
 	type = "monster",
 	hp_min = 20,
 	hp_max = 30,
@@ -62,26 +81,22 @@ mobs:register_mob("mobs_ghost_redo:ghost", {
 	view_range = 15,
 	reach = 4,
 	damage = 4,
-	water_damage = false,
-	lava_damage = false,
-	light_damage = 9999,
+	water_damage = 0,
+	lava_damage = 0,
+	light_damage = 2,
 	suffocation = false,
-	docile_by_day = false,
 	attack_animals = true,
 	group_attack = true,
 	attack_type = "dogfight",
 	blood_amount = 0,
-	pathfinding = 0,
 	immune_to = {
-		{"", 0},
-		{"default:axe_wood", 0},
-		{"default:axe_stone", 0},
-		{"default:pick_wood", 0},
-		{"default:pick_stone", 0},
-		{"default:shovel_wood", 0},
-		{"default:shovel_stone", 0},
-		{"default:sword_wood", 0},
-		{"default:sword_stone", 0},
+		{"all"},
+		{"default:sword_steel", 6},
+		{"default:sword_bronze", 6},
+		{"default:sword_mese", 7},
+		{"mobs_others:sword_obsidian", 7},
+		{"default:sword_diamond", 8},
+		{"moreores:sword_silver", 12}
 	},
 	makes_footstep_sound = false,
 	sounds = {
@@ -117,14 +132,79 @@ mobs:register_mob("mobs_ghost_redo:ghost", {
       die_speed = 28,
       die_loop = false,
 	},
+
 	on_spawn = function(self, pos)
+		self.spawned = true
 		self.mesh = random_mesh()
+		self.counter = 0
 		self.object:set_properties({
+			spawned = self.spawned,
 			mesh = self.mesh,
+			counter = self.counter,
 			physical = false,
 			collide_with_objects = false
 		})
 		return true
+	end,
+
+	do_custom = function(self, dtime)
+		if (ghost_daytime_check == true) then
+
+			if (self.light_damage ~= 0) then
+				self.light_damage = 0
+
+				self.object:set_properties({
+					light_damage = self.light_damage
+				})
+			end
+
+			if (self.spawned == true) then
+				local daytime = day_or_night()
+
+				if (daytime == true) then
+					self.object:remove()
+
+				else
+					self.spawned = false
+					self.object:set_properties({
+						spawned = self.spawned
+					})
+
+				end
+
+			else
+				if (self.counter < 15.0) then
+					self.counter = self.counter + dtime
+
+					self.object:set_properties({
+						counter = self.counter
+					})
+
+				else
+					local daytime = day_or_night()
+
+					if (daytime == true) then
+						self.object:remove()
+
+					else
+						self.counter = 0
+
+						self.object:set_properties({
+							counter = self.counter
+						})
+
+					end
+				end
+			end
+		else
+			if (self.light_damage ~= 2) then
+				self.light_damage = 2
+
+				self.object:set_properties({
+					light_damage = self.light_damage
+				})
+			end
+		end
 	end
 })
 
@@ -142,7 +222,8 @@ mobs:spawn({name = "mobs_ghost_redo:ghost",
 	chance = 7,
 	active_object_count = 1,
 	min_height = -30912,
-	max_height = 31000
+	max_height = 31000,
+	day_toggle = false
 })
 
 

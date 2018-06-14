@@ -1,3 +1,5 @@
 default
 bones
 mobs
+mobs_others?
+moreores?
