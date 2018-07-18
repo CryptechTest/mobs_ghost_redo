@@ -231,7 +231,7 @@ mobs:spawn({name = "mobs_ghost_redo:ghost",
 --
 
 mobs:register_egg("mobs_ghost_redo:ghost", "Ghost Spawn-Egg",
-	"mobs_ghost_egg_ghost.png", 0, false)
+	"mobs_ghost_redo_egg_ghost.png", 0, false)
 
 
 --
@@ -250,5 +250,5 @@ or (minetest_log_level == "action")
 or	(minetest_log_level == "info")
 or (minetest_log_level == "verbose")
 then
-	minetest.log("action", "[Mod] Mobs Ghost Redo [v0.5.0] loaded.")
+	minetest.log("action", "[Mod] Mobs Ghost Redo [v0.5.1] loaded.")
 end
