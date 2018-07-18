@@ -1,26 +1,26 @@
 ### Mobs Ghost Redo
-![Mobs Ghost Redo's screenshot](screenshot.png)<br>
-**_Adds a ghost mob._**
+![Mobs Ghost Redo's screenshot](screenshot.png)  
+**_Adds ghosts._**
 
 **NOTE:** This is Blockmen's CME Ghost mob ported to Mobs Redo, and tweaked.
 
-**Version:** 0.4.1<br>
-**Source code's license:** GPL v3.0<br>
+**Version:** 0.5.0  
+**Source code's license:** GPL v3.0  
 **Media (Textures, Models, Sounds) license:** CC-BY-SA 4.0 International.
 
-**Dependencies:** default, bones (found in Minetest Game), mobs (Mobs Redo)<br>
-**Supported:** mobs_others, moreores<br>
+**Dependencies:** default, bones (found in Minetest Game), mobs (Mobs Redo)  
+**Supported:** mobs_humans, mobs_others, moreores  
 
 ### Installation
 
-Unzip the archive, rename the folder to mobs_ghost_redo and place it in<br>
+Unzip the archive, rename the folder to mobs_ghost_redo and place it in  
 ../minetest/mods/
 
-If you only want this to be used in a single world, place it in<br>
+If you only want this to be used in a single world, place it in  
 ../minetest/worlds/WORLD_NAME/worldmods/
 
-GNU+Linux - If you use a system-wide installation place it in<br>
+GNU+Linux - If you use a system-wide installation place it in  
 ~/.minetest/mods/
 
-For further information or help see:<br>
+For further information or help see:  
 https://wiki.minetest.net/Help:Installing_Mods

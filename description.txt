@@ -1,1 +1,1 @@
-Adds a ghost mob.
+Adds ghosts.

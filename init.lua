@@ -1,7 +1,6 @@
 --[[
-    Mobs Ghost Redo - Adds a ghost mob.
+    Mobs Ghost Redo - Adds ghosts.
     Copyright (C) 2018  Hamlet
-    Code based on BlockMen's <blockmen2015@gmail.com> CME Ghost mob.
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -24,7 +23,6 @@
 
 local ghost_daytime_check = minetest.settings:get_bool("ghost_daytime_check")
 local minetest_log_level = minetest.settings:get("debug_log_level")
-local mod_load_message = "[Mod] Mobs Ghost Redo [v0.4.1] loaded."
 
 if (ghost_daytime_check == nil) then
 	ghost_daytime_check = false
@@ -96,7 +94,8 @@ mobs:register_mob("mobs_ghost_redo:ghost", {
 		{"default:sword_mese", 7},
 		{"mobs_others:sword_obsidian", 7},
 		{"default:sword_diamond", 8},
-		{"moreores:sword_silver", 12}
+		{"moreores:sword_silver", 12},
+		{"moreores:sword_mithril", 9}
 	},
 	makes_footstep_sound = false,
 	sounds = {
@@ -214,7 +213,7 @@ mobs:register_mob("mobs_ghost_redo:ghost", {
 --
 
 mobs:spawn({name = "mobs_ghost_redo:ghost",
-	nodes = {"bones:bones"},
+	nodes = {"bones:bones", "mobs_humans:human_bones"},
 	neighbors = {"air"},
 	max_light = 4,
 	min_light = 0,
@@ -246,8 +245,10 @@ mobs:alias_mob("mobs:ghost", "mobs_ghost_redo:ghost")
 -- Minetest engine debug logging
 --
 
-if (minetest_log_level == nil) or (minetest_log_level == "action") or
-	(minetest_log_level == "info") or (minetest_log_level == "verbose") then
-
-	minetest.log("action", mod_load_message)
+if (minetest_log_level == nil)
+or (minetest_log_level == "action")
+or	(minetest_log_level == "info")
+or (minetest_log_level == "verbose")
+then
+	minetest.log("action", "[Mod] Mobs Ghost Redo [v0.5.0] loaded.")
 end
