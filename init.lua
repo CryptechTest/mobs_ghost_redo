@@ -1,31 +1,68 @@
 --[[
-    Mobs Ghost Redo - Adds ghosts.
-    Copyright (C) 2018  Hamlet
+	Mobs Ghost Redo - Adds ghosts.
+	Copyright © 2018-2019 Hamlet <hamlatmesehub@riseup.net>
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+	Licensed under the EUPL, Version 1.2 or – as soon they will be
+	approved by the European Commission – subsequent versions of the
+	EUPL (the "Licence");
+	You may not use this work except in compliance with the Licence.
+	You may obtain a copy of the Licence at:
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+	https://joinup.ec.europa.eu/software/page/eupl
+	https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32017D0863
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	Unless required by applicable law or agreed to in writing,
+	software distributed under the Licence is distributed on an
+	"AS IS" basis,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+	implied.
+	See the Licence for the specific language governing permissions
+	and limitations under the Licence.
+
 --]]
+
+
+-- Used for localization
+
+local S = minetest.get_translator("mobs_ghost_redo")
 
 
 --
 -- General variables
 --
 
-local ghost_daytime_check = minetest.settings:get_bool("ghost_daytime_check")
-local minetest_log_level = minetest.settings:get("debug_log_level")
+local ghost_daytime_check = minetest.settings:get_bool("mobs_ghost_redo_daytime_check")
+local ghost_bones_only = minetest.settings:get_bool("mobs_ghost_redo_bones_only")
 
 if (ghost_daytime_check == nil) then
 	ghost_daytime_check = false
+end
+
+if (ghost_bones_only == nil) then
+	ghost_bones_only = false
+end
+
+
+local SPAWNING_NODES = {}
+local SPAWNING_CHANCE = 0
+
+
+if (ghost_bones_only == true) then
+	SPAWNING_NODES = {"bones:bones", "mobs_humans:human_bones"}
+	SPAWNING_CHANCE = 7
+	ACTIVE_OBJECTS = 1
+
+else
+	SPAWNING_NODES = {
+		"group:cracky",
+		"group:stone",
+		"group:crumbly",
+		"group:sand",
+		"group:snowy",
+	}
+	SPAWNING_CHANCE = 7500
+	ACTIVE_OBJECTS = 2
+
 end
 
 
@@ -107,9 +144,9 @@ mobs:register_mob("mobs_ghost_redo:ghost", {
 	},
 	visual = "mesh",
 	visual_size = {x = 1, y = 1},
-	collisionbox = {-0.25, 0, -0.3, 0.25, 1.3, 0.3},
+	collisionbox = {-0.3, -0.5, -0.3, 0.3, 1.5, 0.3},
 	textures = {"mobs_ghost_redo_ghost.png"},
-	mesh = "",
+	mesh = "mobs_ghost_redo_ghost_1.b3d",
 	animation = {
 		stand_start = 0,
 		stand_end = 80,
@@ -213,13 +250,13 @@ mobs:register_mob("mobs_ghost_redo:ghost", {
 --
 
 mobs:spawn({name = "mobs_ghost_redo:ghost",
-	nodes = {"bones:bones", "mobs_humans:human_bones"},
+	nodes = SPAWNING_NODES,
 	neighbors = {"air"},
 	max_light = 4,
 	min_light = 0,
 	interval = 60,
-	chance = 7,
-	active_object_count = 1,
+	chance = SPAWNING_CHANCE,
+	active_object_count = ACTIVE_OBJECTS,
 	min_height = -30912,
 	max_height = 31000,
 	day_toggle = false
@@ -230,7 +267,7 @@ mobs:spawn({name = "mobs_ghost_redo:ghost",
 -- Ghost's egg
 --
 
-mobs:register_egg("mobs_ghost_redo:ghost", "Ghost Spawn-Egg",
+mobs:register_egg("mobs_ghost_redo:ghost", S("Ghost Spawner"),
 	"mobs_ghost_redo_egg_ghost.png", 0, false)
 
 
@@ -245,10 +282,14 @@ mobs:alias_mob("mobs:ghost", "mobs_ghost_redo:ghost")
 -- Minetest engine debug logging
 --
 
-if (minetest_log_level == nil)
-or (minetest_log_level == "action")
-or	(minetest_log_level == "info")
-or (minetest_log_level == "verbose")
+--
+-- Minetest engine debug logging
+--
+
+if (minetest.settings:get("debug_log_level") == nil)
+or (minetest.settings:get("debug_log_level") == "action")
+or (minetest.settings:get("debug_log_level") == "info")
+or (minetest.settings:get("debug_log_level") == "verbose")
 then
-	minetest.log("action", "[Mod] Mobs Ghost Redo [v0.5.1] loaded.")
+	minetest.log("action", "[Mod] Mobs Ghost Redo [v0.6.0] loaded.")
 end

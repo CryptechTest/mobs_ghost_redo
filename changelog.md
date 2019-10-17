@@ -10,10 +10,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 	- no other features planned
 
 
+## [0.6.0] - 2019-10-17
+### Added
+
+	- Support for translations.
+	- Option to toggle ghosts' spawning from bones only or from other nodes.
+
+### Changed
+
+	- License changed to EUPL v1.2.
+	- mod.conf set to follow MT v5.x specifics.
+	- Textures have been optimized (with optipng).
+
+### Removed
+
+	- Support for MT v0.4.x
+
+
+
 ## [0.5.1] - 2018-07-18
 ### Changed
 
 	- fixed the spawner egg's icon not being shown (thanks cHyper!)
+
 
 
 ## [0.5.0] - 2018-07-18
