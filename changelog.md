@@ -10,6 +10,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 	- no other features planned
 
 
+## [0.7.0] - 2019-10-31
+### Added
+
+	- Option to choose if ghosts can be hurt only by metal or crystal swords  
+		(false by default).
+	- Drop gold lump, min 1, max 5, chance 1 on 100.
+
+### Modified
+
+	- Default hit points range from 10 to 20, in harder mode from 20 to 30.
+	- By default no longer immune to anything but swords, save in harder mode.
+
+
+
 ## [0.6.0] - 2019-10-17
 ### Added
 

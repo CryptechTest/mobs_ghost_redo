@@ -1,6 +1,6 @@
 --[[
 	Mobs Ghost Redo - Adds ghosts.
-	Copyright © 2018-2019 Hamlet <hamlatmesehub@riseup.net>
+	Copyright © 2018, 2019 Hamlet <hamlatmesehub@riseup.net> and contributors.
 
 	Licensed under the EUPL, Version 1.2 or – as soon they will be
 	approved by the European Commission – subsequent versions of the
@@ -33,6 +33,7 @@ local S = minetest.get_translator("mobs_ghost_redo")
 
 local ghost_daytime_check = minetest.settings:get_bool("mobs_ghost_redo_daytime_check")
 local ghost_bones_only = minetest.settings:get_bool("mobs_ghost_redo_bones_only")
+local ghost_difficulty = minetest.settings:get_bool("mobs_ghost_redo_difficulty")
 
 if (ghost_daytime_check == nil) then
 	ghost_daytime_check = false
@@ -42,6 +43,9 @@ if (ghost_bones_only == nil) then
 	ghost_bones_only = false
 end
 
+if (ghost_difficulty == nil) then
+	ghost_difficulty = false
+end
 
 local SPAWNING_NODES = {}
 local SPAWNING_CHANCE = 0
@@ -106,8 +110,8 @@ end
 
 mobs:register_mob("mobs_ghost_redo:ghost", {
 	type = "monster",
-	hp_min = 20,
-	hp_max = 30,
+	hp_min = 10,
+	hp_max = 20,
 	armor = 100,
 	walk_velocity = 1,
 	run_velocity = 4,
@@ -124,16 +128,6 @@ mobs:register_mob("mobs_ghost_redo:ghost", {
 	group_attack = true,
 	attack_type = "dogfight",
 	blood_amount = 0,
-	immune_to = {
-		{"all"},
-		{"default:sword_steel", 6},
-		{"default:sword_bronze", 6},
-		{"default:sword_mese", 7},
-		{"mobs_others:sword_obsidian", 7},
-		{"default:sword_diamond", 8},
-		{"moreores:sword_silver", 12},
-		{"moreores:sword_mithril", 9}
-	},
 	makes_footstep_sound = false,
 	sounds = {
 		random = "mobs_ghost_redo_ghost_1",
@@ -141,6 +135,9 @@ mobs:register_mob("mobs_ghost_redo:ghost", {
 		attack = "mobs_ghost_redo_ghost_2",
 		damage = "mobs_ghost_redo_ghost_hit",
 		death = "mobs_ghost_redo_ghost_death",
+	},
+	drops = {
+		{name = "default:gold_lump", chance = 100, min = 1, max = 5}
 	},
 	visual = "mesh",
 	visual_size = {x = 1, y = 1},
@@ -151,29 +148,46 @@ mobs:register_mob("mobs_ghost_redo:ghost", {
 		stand_start = 0,
 		stand_end = 80,
 		stand_speed = 15,
-      walk_start = 102,
-      walk_end = 122,
-      walk_speed = 12,
-      run_start = 102,
-      run_end = 122,
-      run_speed = 10,
-      fly_start = 102,
-      fly_end = 122,
-      fly_speed = 12,
-      punch_start = 102,
-      punch_end = 122,
-      punch_speed = 25,
-      die_start = 81,
-      die_end = 101,
-      die_speed = 28,
-      die_loop = false,
+		walk_start = 102,
+		walk_end = 122,
+		walk_speed = 12,
+		run_start = 102,
+		run_end = 122,
+		run_speed = 10,
+		fly_start = 102,
+		fly_end = 122,
+		fly_speed = 12,
+		punch_start = 102,
+		punch_end = 122,
+		punch_speed = 25,
+		die_start = 81,
+		die_end = 101,
+		die_speed = 28,
+		die_loop = false,
 	},
 
 	on_spawn = function(self, pos)
+		if (ghost_difficulty == true) then
+			self.health = math.random(20, 30)
+
+			self.immune_to = {
+				{"all"},
+				{"default:sword_steel", 6},
+				{"default:sword_bronze", 6},
+				{"default:sword_mese", 7},
+				{"mobs_others:sword_obsidian", 7},
+				{"default:sword_diamond", 8},
+				{"moreores:sword_silver", 12},
+				{"moreores:sword_mithril", 9}
+			}
+		end
+
 		self.spawned = true
 		self.mesh = random_mesh()
 		self.counter = 0
 		self.object:set_properties({
+			health = self.health,
+			immune_to = self.immune_to,
 			spawned = self.spawned,
 			mesh = self.mesh,
 			counter = self.counter,
@@ -282,14 +296,10 @@ mobs:alias_mob("mobs:ghost", "mobs_ghost_redo:ghost")
 -- Minetest engine debug logging
 --
 
---
--- Minetest engine debug logging
---
-
 if (minetest.settings:get("debug_log_level") == nil)
 or (minetest.settings:get("debug_log_level") == "action")
 or (minetest.settings:get("debug_log_level") == "info")
 or (minetest.settings:get("debug_log_level") == "verbose")
 then
-	minetest.log("action", "[Mod] Mobs Ghost Redo [v0.6.0] loaded.")
+	minetest.log("action", "[Mod] Mobs Ghost Redo [v0.7.0] loaded.")
 end
