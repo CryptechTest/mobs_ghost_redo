@@ -110,6 +110,7 @@ end
 
 mobs:register_mob("mobs_ghost_redo:ghost", {
 	type = "monster",
+	passive = false,
 	hp_min = 10,
 	hp_max = 20,
 	armor = 100,
