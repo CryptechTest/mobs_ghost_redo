@@ -265,7 +265,7 @@ mobs:register_mob("mobs_ghost_redo:ghost", {
 
 mobs:spawn({name = "mobs_ghost_redo:ghost",
 	nodes = SPAWNING_NODES,
-	neighbors = {"air"},
+	neighbors = {"air", "vacuum:vacuum", "asteroid:atmos"},
 	max_light = 4,
 	min_light = 0,
 	interval = 60,
